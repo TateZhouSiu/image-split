@@ -67,6 +67,30 @@ make ocr-paddle-demo
 
 OCR 工具矩阵、部署说明和 MinerU 接入见 [docs/ocr-tools.md](docs/ocr-tools.md)。
 
+## Skill 安装复现
+
+如果只安装 skill 目录，也可以直接跑最小 demo：
+
+```bash
+cp -R skills/image-split ~/.codex/skills/
+cd ~/.codex/skills/image-split
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/atomic_asset_split.py \
+  --image assets/demo/input.png \
+  --elements assets/demo/elements.json \
+  --out outputs/demo
+```
+
+单独安装后的 skill 目录也包含 OCR Docker demo：
+
+```bash
+make ocr-demo
+```
+
+它会基于内置 demo 图片把 OCR 产物写到 `outputs/ocr-demo/`。
+
 ## 与 Image-PPT-King 的关系
 
 Image Split 可以独立用于图片视觉资产拆分，也可以作为 Image-PPT-King 的第一阶段：

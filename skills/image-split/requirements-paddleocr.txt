@@ -1,0 +1,3 @@
+# Optional heavy OCR stack. Prefer installing in a fresh environment.
+# PaddleOCR 3.x requires an inference engine such as PaddlePaddle or Transformers.
+paddleocr[all]>=3.0

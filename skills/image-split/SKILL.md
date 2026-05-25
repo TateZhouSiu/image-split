@@ -61,10 +61,18 @@ For editable PPT reconstruction, split by atomic visual assets, not broad skelet
 For the stricter v2 workflow used on difficult editable-PPT pages, read `references/v2-atomic-workflow.md` before authoring the elements file.
 For the CopySlides-like route validated on Image2 deck page 16, read `references/copyslides-like-region-workflow.md` before authoring the region schema or visual layers.
 For OCR racing, region-schema fields, and merge rules, read `references/region-schema-ocr-racing.md` before accepting text-heavy pages.
-For public one-command OCR setup and supported engines, read `docs/ocr-tools.md` in the repository root when available.
+For public one-command OCR setup and supported engines, read `references/ocr-tools.md` when available.
 For final or high-risk samples, read `references/acceptance-rubric.md` and report pass/warn/fail gates before handing visual layers to `image-ppt`.
 
 ## Bundled Script
+
+After installing this skill folder by itself, install script dependencies from the skill root:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
 For production editable-PPT samples, prefer an atomic elements file and cropped positioned assets:
 
@@ -76,6 +84,15 @@ python scripts/atomic_asset_split.py \
 ```
 
 The script writes cropped transparent PNG assets, `manifest.json`, `assets_contact_sheet.png`, and `composite_no_text_preview.png`. The manifest is consumable by `image-ppt` because each cropped asset has `position` and `canvas` metadata. For cropped raster assets, use `mask: "nonwhite"` for art on pale backgrounds, `mask: "light"` for pale line art/icons on deep color backgrounds, and `mask: "color"` for single-color glyphs on pale backgrounds.
+
+Run the bundled smoke demo from the skill root:
+
+```bash
+python scripts/atomic_asset_split.py \
+  --image assets/demo/input.png \
+  --elements assets/demo/elements.json \
+  --out outputs/demo
+```
 
 Use `scripts/component_layer_split.py` for repeatable component-layer extraction from a single source image:
 
@@ -101,6 +118,14 @@ python scripts/ocr_race.py \
 ```
 
 The script writes `ocr-candidates.json`, `ocr-merged.json`, `ocr-review-report.md`, and `ocr_boxes_preview.png`. In the public repository, the default one-command path is `make ocr-demo`, which runs Tesseract in Docker; PaddleOCR and MinerU are optional heavier engines.
+
+When this skill folder is installed by itself, the same Docker path is bundled at the skill root:
+
+```bash
+make ocr-demo
+```
+
+This writes OCR artifacts under `outputs/ocr-demo/`. Without Docker, install optional OCR Python bindings with `pip install -r requirements-ocr.txt` and make sure the Tesseract binary is installed on the host before running `scripts/ocr_race.py`.
 
 ## Recipe Pattern
 

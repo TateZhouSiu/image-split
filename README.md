@@ -94,6 +94,27 @@ skills/image-split/SKILL.md
 
 For Codex-style skill installation, copy `skills/image-split/` into your local skills directory and restart the agent.
 
+The skill folder is also self-contained for a smoke test:
+
+```bash
+cd ~/.codex/skills/image-split
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/atomic_asset_split.py \
+  --image assets/demo/input.png \
+  --elements assets/demo/elements.json \
+  --out outputs/demo
+```
+
+The installed skill folder also includes the OCR Docker demo:
+
+```bash
+make ocr-demo
+```
+
+This writes OCR artifacts to `outputs/ocr-demo/` from the bundled demo image.
+
 ## Relationship To Image-PPT-King
 
 Image Split can be used independently for visual asset extraction, but it is also the first stage of Image-PPT-King:
@@ -104,4 +125,4 @@ flat image -> Image Split assets/schema/OCR evidence -> Image-PPT-King -> editab
 
 ## Status
 
-This repository is an open-source packaging pass over a working local workflow. The first public release should focus on reproducible examples, dependency cleanup, and CI smoke tests.
+This repository is an open-source packaging pass over a working local workflow. The public skill folder now includes its own demo assets, Python requirements, OCR references, and Docker-based OCR smoke path; CI remains a useful next step.

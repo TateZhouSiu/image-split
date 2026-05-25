@@ -1,0 +1,7 @@
+.venv
+__pycache__
+*.pyc
+outputs
+assets/demo/output
+assets/demo/ocr
+node_modules
