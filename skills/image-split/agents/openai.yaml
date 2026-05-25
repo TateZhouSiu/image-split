@@ -1,0 +1,4 @@
+interface:
+  display_name: "Image Split"
+  short_description: "Split slide images into atomic visual layers and region schemas."
+  default_prompt: "Split these slide images into transparent visual elements and a region schema, keeping semantic text separate and preserving original layout."

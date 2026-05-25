@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+outputs/
+examples/demo/ocr/
+examples/demo/ocr-mineru/
+*.pptx
+*.key
+*.pdf

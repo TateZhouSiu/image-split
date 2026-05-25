@@ -1,0 +1,36 @@
+services:
+  ocr-demo:
+    build:
+      context: .
+      dockerfile: docker/ocr.Dockerfile
+      args:
+        INSTALL_PADDLEOCR: ${INSTALL_PADDLEOCR:-0}
+    image: image-split-ocr:local
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command:
+      - python
+      - skills/image-split/scripts/ocr_race.py
+      - --image
+      - examples/demo/input.png
+      - --out
+      - examples/demo/ocr
+      - --engines
+      - ${OCR_ENGINES:-tesseract}
+      - --lang
+      - ${OCR_LANG:-eng}
+
+  ocr-shell:
+    build:
+      context: .
+      dockerfile: docker/ocr.Dockerfile
+      args:
+        INSTALL_PADDLEOCR: ${INSTALL_PADDLEOCR:-0}
+    image: image-split-ocr:local
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command: /bin/bash
+    stdin_open: true
+    tty: true
