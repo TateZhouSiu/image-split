@@ -26,6 +26,20 @@ flowchart LR
   E --> G["Image-PPT-King or other renderer"]
 ```
 
+## Reproducibility Profile
+
+The bundled script demo is deterministic and does not require an AI model. Production-quality splitting of real slide screenshots does require a capable agent runtime because the hard part is deciding semantic regions, visual anchors, OCR conflicts, and QA gates.
+
+Recommended agent runtime:
+
+- Codex-style agent mode with local file read/write and command execution.
+- Multimodal model with image input and strong visual reasoning.
+- Frontier reasoning model, such as GPT-5.5 or an equivalent model, for dense or high-value decks.
+- Reasoning effort: `high` for normal production work; `xhigh` when available for difficult full-deck reconstruction.
+- Long enough context to inspect source images, manifests, OCR evidence, contact sheets, and generated artifacts together.
+
+Known-good author setup: macOS, Codex-style local agent, GPT-5.5-class multimodal reasoning, and `xhigh` reasoning for difficult pages. Smaller or lower-reasoning models can still run the scripts, but may need more human correction when authoring region schemas or judging split quality.
+
 ## Quick Start
 
 Install Python dependencies:
@@ -51,6 +65,15 @@ The command writes:
 - cropped transparent PNG assets
 - `assets_contact_sheet.png`
 - `composite_no_text_preview.png`
+
+## Platform Notes
+
+The repository is authored and validated primarily on macOS. The scripts are cross-platform Python, but shell setup differs:
+
+- macOS/Linux/WSL2: use the commands as written with `python -m venv`, `source .venv/bin/activate`, and POSIX line continuations.
+- Windows PowerShell: use `py -m venv .venv`, then `.venv\Scripts\Activate.ps1`, then `pip install -r requirements.txt`.
+- Windows users who need OCR or PaddleOCR should prefer WSL2 with Docker Desktop integration. Native Windows can run the Python scripts, but `make ocr-demo` normally requires either GNU Make or the direct command `docker compose run --rm ocr-demo`.
+- Direct host OCR requires the Tesseract binary on `PATH`; the Docker OCR path is the most repeatable option across machines.
 
 ## OCR One-Command Setup
 

@@ -19,6 +19,15 @@ For editable PPT reconstruction, split by atomic visual assets, not broad skelet
 - Remove semantic text from visual layers unless the user explicitly wants logo text, chart labels, or decorative background text preserved.
 - Do not blur alpha for geometric/UI assets. Use antialiasing only from clean vector drawing or high-resolution downsampling.
 
+## Runtime Assumptions
+
+- The bundled smoke demo is deterministic and can run without an AI model once Python dependencies are installed.
+- Production splitting needs a Codex-style agent that can inspect images, read/write files, run Python/OCR commands, and review generated PNG artifacts.
+- Use a strong multimodal reasoning model for real slide reconstruction. The author-known-good profile is macOS, Codex-style local agent, GPT-5.5-class multimodal reasoning, and `xhigh` reasoning for difficult pages.
+- Use `high` reasoning for normal production work; use `xhigh` when available for dense decks, ambiguous OCR, or layout-heavy pages.
+- Smaller models may run the scripts but are more likely to create weak region schemas, miss visual anchors, or accept poor splits.
+- For macOS/Windows/Linux setup details, read `references/runtime-and-platform.md` before promising reproducibility to a user.
+
 ## Routes
 
 - `atomic-assets route`: production route for editable PPT. Outputs many named, cropped transparent assets with `position` metadata and optional full-canvas preview layers.
